@@ -19,11 +19,12 @@ ini_set('display_errors', '1');
 
 $values[] = array('desc' => 'PHP version >= 5.3.0', 'res' => (version_compare(PHP_VERSION, '5.3.0') >= 0));
 $values[] = array('desc' => 'PHP version < 7.0.0', 'res' => (version_compare(PHP_VERSION, '7.0.0') < 0));
+$values[] = array('desc' => 'Default Time Zone set', 'res' => ( ! empty(ini_get('date.timezone'))));
 $values[] = array('desc' => 'mcrypt module installed', 'res' => extension_loaded('mcrypt'));
 $values[] = array('desc' => 'simplexml module installed', 'res' => extension_loaded('simplexml'));
 $values[] = array('desc' => 'zlib module installed', 'res' => extension_loaded('zlib'));
 $values[] = array('desc' => 'json module installed', 'res' => extension_loaded('json'));
-$values[] = array('desc' => 'mhash module installed', 'res' => extension_loaded('mhash'));
+//$values[] = array('desc' => 'mhash module installed', 'res' => extension_loaded('mhash'));
 $values[] = array('desc' => 'xmlwriter module installed', 'res' => extension_loaded('xmlwriter'));
 $values[] = array('desc' => 'mbstring module installed', 'res' => extension_loaded('mbstring'));
 $values[] = array('desc' => 'pdo module installed', 'res' => extension_loaded('pdo'));
@@ -32,11 +33,21 @@ $values[] = array('desc' => 'gettext installed', 'res' => function_exists('gette
 $values[] = array('desc' => 'shell_exec function enabled', 'res' => isAvailable('shell_exec'));
 $values[] = array('desc' => 'curl function enabled', 'res' => function_exists('curl_version'));
 $values[] = array('desc' => 'Magic Quotes disabled', 'res' => (! get_magic_quotes_gpc()));
-
+$values[] = array('desc' => 'Apache MOD Rewrite enabled', 'res' => checkRewrite());
 
 // =============
 // = FUNCTIONS =
 // =============
+
+function checkRewrite()
+{
+    foreach( $_SERVER AS $k => $v )
+    {
+        if( $k == 'XXX_REWRITE_XXX' ) return true;
+        if( $k == 'REDIRECT_XXX_REWRITE_XXX' ) return true;
+    }
+    return( false );
+}
 
 function output($str)
 {
@@ -87,7 +98,7 @@ if (PHP_SAPI == 'cli') {
         output($value['desc'] . ': ' . check($value['res']) . PHP_EOL);
     }
 
-    output(PHP_EOL . 'You can also view this file in a browser' . PHP_EOL);
+    output(PHP_EOL . 'This test should be done in a browser' . PHP_EOL);
     exit;
 }
 
@@ -184,7 +195,7 @@ if (PHP_SAPI == 'cli') {
             <div class="container">
                 <div class="row">
                     <div class="col-xs-8">
-                        <p>You can view this page in the CLI.</p>
+                        <p><a href='https://jlogica.com'>JLogica</a> - Quality Code Always!</p>
                     </div>
                     <div class="col-xs-4">
                         <p class="text-right"><a target="_blank" href="https://github.com/JLogica/aMember.Requirements.PHP">View or report issues in GitHub</a></p>
